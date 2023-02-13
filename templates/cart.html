@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row text-center" style="margin-top: 60px;">
+            <h4>Cart Orders</h4>
+            <table class="table">
+                <thead>
+                  <tr>
+                
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Quantity</th>
+                    <th scope="col">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for i in orders %}
+                  <tr>
+                    
+                    <td>{{i.product.name}}</td>
+                    <td>{{i.qantity}}</td>
+                    <td>{{i.product.price}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+            <button style="margin-top: 40px;" id="buy-button" class="btn btn-primary">Buy</button>
+        </div>
+    </div>
+
+<script>
+document.getElementById('buy-button').addEventListener('click', function() {
+  fetch('/pay/{{ cart.id }}')
+    .then(response => response.json())
+    .then(data => {
+      const stripe = Stripe('pk_test_51MaYdUK8iXu35ubHDI7rbucHT1VAxG07R6le3ZrOmaW9xdu8l9IetfJWvqFUk2eAkp6FUYTVBO7H3glvXnyGDK3m00M1WJ06Wy');
+      stripe.redirectToCheckout({ sessionId: data.session_id });
+    });
+});
+</script>
+</body>
+</html>

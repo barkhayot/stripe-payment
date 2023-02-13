@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+
+  stripe_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0:80
+    ports:
+      - "9000:80"
+    volumes: 
+      - ./:/main

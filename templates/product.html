@@ -1,0 +1,17 @@
+<h1>{{ item.name }}</h1>
+<p>{{ item.description }}</p>
+<p>Price: {{ item.price }}</p>
+<input type="number" id="q" name="q" value="1">
+<button id="buy-button">Buy</button>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+document.getElementById('buy-button').addEventListener('click', function() {
+  fetch('/buy/{{ item.id }}')
+    .then(response => response.json())
+    .then(data => {
+      const stripe = Stripe('pk_test_51MaYdUK8iXu35ubHDI7rbucHT1VAxG07R6le3ZrOmaW9xdu8l9IetfJWvqFUk2eAkp6FUYTVBO7H3glvXnyGDK3m00M1WJ06Wy');
+      stripe.redirectToCheckout({ sessionId: data.session_id });
+    });
+});
+</script>
