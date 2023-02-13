@@ -5,7 +5,7 @@ from django.http import JsonResponse
 # Create your views here.
 
 # API KEY (.ENV is not used)
-stripe.api_key = 'sk_test_51MaYdUK8iXu35ubH9x2iq0EYjtVjwbIuHWjrW8KNIoRgvkqMcLoSZIwkQNAft6mVsKbZSgw60nIK2jgl6QettHQf003aNxcj0Z'
+stripe.api_key = 'API_KEY'
 
 # Get list of all products and make pack model of all selected products 
 def get_list_products(request):
